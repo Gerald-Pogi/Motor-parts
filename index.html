@@ -1,0 +1,4102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ClickParts PH | Honda Click Parts - Inventory & Delivery</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    color:#333;
+}
+
+/* HEADER */
+
+header{
+    background:#ee4d2d;
+    color:white;
+    padding:15px 5%;
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.search{
+    flex:1;
+    display:flex;
+    max-width:700px;
+}
+
+.search input{
+    width:100%;
+    padding:13px;
+    border:0;
+    outline:0;
+    font-size:15px;
+}
+
+.search button{
+    padding:13px 20px;
+    border:0;
+    background:#d63e20;
+    color:white;
+    cursor:pointer;
+}
+
+.cart-button{
+    border:0;
+    background:white;
+    color:#ee4d2d;
+    padding:12px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* CATEGORY */
+
+.categories{
+    background:white;
+    padding:15px 5%;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.categories button{
+    padding:9px 15px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.categories button:hover{
+    background:#ee4d2d;
+    color:white;
+}
+
+/* MAIN */
+
+.container{
+    width:90%;
+    max-width:1300px;
+    margin:25px auto;
+}
+
+.title{
+    margin-bottom:20px;
+}
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+.product-image{
+    height:170px;
+    background:linear-gradient(135deg,#222,#555);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:55px;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-info h3{
+    font-size:16px;
+    min-height:40px;
+}
+
+.category{
+    display:inline-block;
+    margin:8px 0;
+    padding:4px 7px;
+    background:#fff0eb;
+    color:#ee4d2d;
+    font-size:12px;
+    border-radius:3px;
+}
+
+.price{
+    color:#ee4d2d;
+    font-size:20px;
+    font-weight:bold;
+    margin:7px 0;
+}
+
+.stock{
+    color:#777;
+    font-size:13px;
+}
+
+.buttons{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.buttons button{
+    flex:1;
+    padding:9px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+.details{
+    background:white;
+    color:#ee4d2d;
+    border:1px solid #ee4d2d;
+}
+
+.add{
+    background:#ee4d2d;
+    color:white;
+    border:0;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.65);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:white;
+    width:92%;
+    max-width:650px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:8px;
+    padding:25px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:18px;
+    top:12px;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* CART */
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.qty button{
+    padding:5px 9px;
+    margin:2px;
+    cursor:pointer;
+}
+
+.remove{
+    background:#d9534f;
+    color:white;
+    border:0;
+    padding:6px;
+    cursor:pointer;
+}
+
+.total{
+    text-align:right;
+    color:#ee4d2d;
+    font-size:23px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:12px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+
+.submit{
+    width:100%;
+    padding:13px;
+    background:#ee4d2d;
+    color:white;
+    border:0;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+/* ORDER STATUS */
+
+.status{
+    display:flex;
+    margin:30px 0;
+}
+
+.status div{
+    flex:1;
+    text-align:center;
+    padding:12px 5px;
+    border-bottom:4px solid #ddd;
+    color:#999;
+}
+
+.status .active{
+    color:#ee4d2d;
+    border-bottom-color:#ee4d2d;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .header{
+        flex-direction:column;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .product-image{
+        height:130px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .cart-item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     SUPABASE CONFIGURATION
+     Replace these two values with your Supabase project values.
+========================================================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL_HERE";
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+
+let supabaseClient = null;
+
+if (
+    SUPABASE_URL !== "PASTE_YOUR_SUPABASE_URL_HERE" &&
+    SUPABASE_PUBLISHABLE_KEY !== "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE"
+) {
+    supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+}
+</script>
+
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="header">
+
+    <div class="logo">
+        🏍️ ClickParts PH
+    </div>
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Search Honda Click parts..."
+            onkeyup="searchProducts()"
+        >
+
+        <button onclick="searchProducts()">
+            Search
+        </button>
+
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+
+        🛒 Cart
+
+        (<span id="cartCount">0</span>)
+
+    </button>
+
+</div>
+
+</header>
+
+<div id="backendStatus" style="background:#fff;padding:8px 5%;font-size:13px;color:#777;text-align:center">
+    Backend: checking...
+</div>
+
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<div class="categories">
+
+<button onclick="filterProducts('All')">
+All
+</button>
+
+<button onclick="filterProducts('Engine Parts')">
+Engine
+</button>
+
+<button onclick="filterProducts('CVT Parts')">
+CVT
+</button>
+
+<button onclick="filterProducts('Brake System')">
+Brake
+</button>
+
+<button onclick="filterProducts('Electrical')">
+Electrical
+</button>
+
+<button onclick="filterProducts('Lighting')">
+Lighting
+</button>
+
+<button onclick="filterProducts('Body Parts')">
+Body
+</button>
+
+<button onclick="filterProducts('Suspension')">
+Suspension
+</button>
+
+</div>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<div class="container">
+
+<h2 class="title">
+Honda Click Motorcycle Parts
+</h2>
+
+<div
+    id="products"
+    class="products">
+</div>
+
+</div>
+
+
+<!-- ================= PRODUCT DETAILS ================= -->
+
+<div
+    id="detailsModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('detailsModal')">
+    ×
+</span>
+
+<div id="detailsContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================= CART ================= -->
+
+<div
+    id="cartModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('cartModal')">
+    ×
+</span>
+
+<h2>🛒 Shopping Cart</h2>
+
+<br>
+
+<div id="cartItems"></div>
+
+<div class="total">
+
+Total:
+₱<span id="cartTotal">0</span>
+
+</div>
+
+<button
+    class="submit"
+    onclick="checkout()">
+
+Proceed to Checkout
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= CHECKOUT ================= -->
+
+<div
+    id="checkoutModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('checkoutModal')">
+    ×
+</span>
+
+<h2>📦 Checkout</h2>
+
+<br>
+
+<form onsubmit="placeOrder(event)">
+
+<div class="form-group">
+
+<label>
+Full Name
+</label>
+
+<input
+    id="customerName"
+    required
+    placeholder="Enter your full name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Phone Number
+</label>
+
+<input
+    id="phone"
+    required
+    placeholder="09XXXXXXXXX">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Delivery Address
+</label>
+
+<textarea
+    id="address"
+    rows="4"
+    required
+    placeholder="Complete delivery address"></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Payment Method
+</label>
+
+<select id="payment" required>
+
+<option value="">
+Select payment method
+</option>
+
+<option>
+Cash on Delivery
+</option>
+
+<option>
+GCash
+</option>
+
+<option>
+Bank Transfer
+</option>
+
+</select>
+
+</div>
+
+
+<button
+    class="submit"
+    type="submit">
+
+🛍️ PLACE ORDER
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- ================= ORDER ================= -->
+
+<div
+    id="orderModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('orderModal')">
+    ×
+</span>
+
+<h2>📦 Order Tracking</h2>
+
+<br>
+
+<p>
+Order Number:
+<strong id="orderNumber"></strong>
+</p>
+
+<br>
+
+<div class="status">
+
+<div id="status1">
+✓ Ordered
+</div>
+
+<div id="status2">
+Packed
+</div>
+
+<div id="status3">
+Shipped
+</div>
+
+<div id="status4">
+Delivered
+</div>
+
+</div>
+
+<p id="orderMessage">
+Your order has been received.
+</p>
+
+<br>
+
+<button
+    class="submit"
+    onclick="nextStatus()">
+
+Update Order Status
+
+</button>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- ================= BACKEND / ADMIN ================= -->
+
+<div id="adminModal" class="modal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('adminModal')">×</span>
+
+<div id="adminContent"></div>
+
+</div>
+</div>
+
+<script>
+
+/* =====================================================
+   HONDA CLICK PRODUCTS
+===================================================== */
+
+const products = [
+
+{
+id:1,
+name:"Honda Click 125/150 Brake Pads",
+price:450,
+category:"Brake System",
+stock:25,
+icon:"🛑",
+description:"Replacement brake pads for Honda Click."
+},
+
+{
+id:2,
+name:"Honda Click CVT Drive Belt",
+price:850,
+category:"CVT Parts",
+stock:18,
+icon:"⚙️",
+description:"CVT drive belt for Honda Click."
+},
+
+{
+id:3,
+name:"Honda Click Variator Set",
+price:1200,
+category:"CVT Parts",
+stock:15,
+icon:"⚙️",
+description:"Complete variator set for Honda Click."
+},
+
+{
+id:4,
+name:"Honda Click Clutch Assembly",
+price:1450,
+category:"CVT Parts",
+stock:10,
+icon:"⚙️",
+description:"Replacement clutch assembly."
+},
+
+{
+id:5,
+name:"Honda Click Air Filter",
+price:280,
+category:"Engine Parts",
+stock:30,
+icon:"🔧",
+description:"Air filter replacement."
+},
+
+{
+id:6,
+name:"Honda Click Oil Filter",
+price:220,
+category:"Engine Parts",
+stock:35,
+icon:"🛢️",
+description:"Oil filter replacement."
+},
+
+{
+id:7,
+name:"Honda Click Spark Plug",
+price:180,
+category:"Engine Parts",
+stock:40,
+icon:"⚡",
+description:"Spark plug replacement."
+},
+
+{
+id:8,
+name:"Honda Click Headlight Assembly",
+price:1850,
+category:"Lighting",
+stock:8,
+icon:"💡",
+description:"Front headlight assembly."
+},
+
+{
+id:9,
+name:"Honda Click LED Tail Light",
+price:950,
+category:"Lighting",
+stock:12,
+icon:"🔴",
+description:"LED rear tail light."
+},
+
+{
+id:10,
+name:"Honda Click Side Mirror Set",
+price:650,
+category:"Body Parts",
+stock:20,
+icon:"🪞",
+description:"Left and right side mirrors."
+},
+
+{
+id:11,
+name:"Honda Click Front Fender",
+price:780,
+category:"Body Parts",
+stock:10,
+icon:"🏍️",
+description:"Front fender replacement."
+},
+
+{
+id:12,
+name:"Honda Click Brake Lever Set",
+price:420,
+category:"Brake System",
+stock:22,
+icon:"🛠️",
+description:"Brake lever replacement set."
+},
+
+{
+id:13,
+name:"Honda Click Throttle Grip Set",
+price:350,
+category:"Handlebar Parts",
+stock:25,
+icon:"🔧",
+description:"Throttle and grip set."
+},
+
+{
+id:14,
+name:"Honda Click Rear Shock Absorber",
+price:1350,
+category:"Suspension",
+stock:14,
+icon:"🔩",
+description:"Rear shock absorber."
+},
+
+{
+id:15,
+name:"Honda Click Front Wheel Bearing",
+price:390,
+category:"Wheel Parts",
+stock:20,
+icon:"⚙️",
+description:"Front wheel bearing."
+},
+
+{
+id:16,
+name:"Honda Click Battery",
+price:1150,
+category:"Electrical",
+stock:15,
+icon:"🔋",
+description:"Motorcycle battery for Honda Click."
+},
+
+{
+id:17,
+name:"Honda Click Horn",
+price:280,
+category:"Electrical",
+stock:25,
+icon:"📢",
+description:"Electric horn replacement."
+},
+
+{
+id:18,
+name:"Honda Click Speedometer Cover",
+price:520,
+category:"Body Parts",
+stock:12,
+icon:"🏍️",
+description:"Speedometer cover."
+},
+
+{
+id:19,
+name:"Honda Click Center Stand",
+price:850,
+category:"Frame Parts",
+stock:10,
+icon:"🔩",
+description:"Center stand replacement."
+},
+
+{
+id:20,
+name:"Honda Click Footrest Panel",
+price:720,
+category:"Body Parts",
+stock:15,
+icon:"🏍️",
+description:"Footrest panel replacement."
+}
+
+];
+/* =====================================================
+   PERSISTENT INVENTORY / BACKEND SIMULATION
+   Stock is saved in localStorage so checkout survives refresh.
+===================================================== */
+
+const defaultProducts = products.map(p => ({...p}));
+
+const savedStock = JSON.parse(localStorage.getItem("clickStock") || "null");
+
+if (savedStock) {
+    products.forEach(p => {
+        if (savedStock[p.id] !== undefined) p.stock = savedStock[p.id];
+    });
+} else {
+    saveStock();
+}
+
+async function saveStock() {
+    const stockData = {};
+    products.forEach(p => stockData[p.id] = p.stock);
+    localStorage.setItem("clickStock", JSON.stringify(stockData));
+
+    if (!supabaseClient) return;
+
+    for (const product of products) {
+        const { error } = await supabaseClient
+            .from("products")
+            .update({ stock: product.stock })
+            .eq("id", product.id);
+
+        if (error) {
+            console.error("Supabase stock update:", error);
+        }
+    }
+}
+
+/* Save every order in an order list, not just the latest order. */
+let orders = JSON.parse(localStorage.getItem("clickOrders") || "[]");
+
+
+/* =====================================================
+   SUPABASE DATABASE HELPERS
+===================================================== */
+
+async function initSupabaseBackend() {
+    const status = document.getElementById("backendStatus");
+
+    if (!supabaseClient) {
+        status.textContent = "Backend: local demo mode — add your Supabase URL and publishable key.";
+        status.style.color = "#a66";
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("products")
+        .select("id,stock")
+        .order("id");
+
+    if (error) {
+        status.textContent = "Backend: Supabase connected, but database tables need to be created.";
+        status.style.color = "#b33";
+        console.error(error);
+        return;
+    }
+
+    data.forEach(row => {
+        const product = products.find(p => p.id === row.id);
+        if (product && typeof row.stock === "number") product.stock = row.stock;
+    });
+
+    saveStockLocalOnly();
+    displayProducts(products);
+
+    status.textContent = "Backend: 🟢 Supabase connected";
+    status.style.color = "green";
+
+    await loadSupabaseOrders();
+}
+
+function saveStockLocalOnly() {
+    const stockData = {};
+    products.forEach(p => stockData[p.id] = p.stock);
+    localStorage.setItem("clickStock", JSON.stringify(stockData));
+}
+
+async function loadSupabaseOrders() {
+    if (!supabaseClient) return;
+
+    const { data, error } = await supabaseClient
+        .from("orders")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (!error && data) {
+        orders = data.map(o => ({
+            number: o.order_number,
+            customer: o.customer_name,
+            phone: o.phone,
+            address: o.address,
+            payment: o.payment,
+            total: o.total,
+            status: statusToNumber(o.status),
+            date: o.created_at
+        }));
+
+        localStorage.setItem("clickOrders", JSON.stringify(orders));
+        renderAdmin();
+    }
+}
+
+function statusToNumber(status) {
+    return {
+        "Ordered":1,
+        "Packed":2,
+        "Shipped":3,
+        "Delivered":4
+    }[status] || 1;
+}
+
+function statusToText(status) {
+    return ["","Ordered","Packed","Shipped","Delivered"][status] || "Ordered";
+}
+
+async function saveOrderToSupabase(order) {
+    if (!supabaseClient) return;
+
+    const { error } = await supabaseClient
+        .from("orders")
+        .insert({
+            order_number: order.number,
+            customer_name: order.customer,
+            phone: order.phone,
+            address: order.address,
+            payment: order.payment,
+            total: order.total,
+            status: statusToText(order.status)
+        });
+
+    if (error) {
+        console.error("Supabase order error:", error);
+        alert("The order was saved locally, but Supabase could not save it. Check your table/RLS settings.");
+    }
+}
+
+async function updateOrderInSupabase(order) {
+    if (!supabaseClient) return;
+
+    const { error } = await supabaseClient
+        .from("orders")
+        .update({
+            status: statusToText(order.status)
+        })
+        .eq("order_number", order.number);
+
+    if (error) console.error("Supabase status error:", error);
+}
+
+async function reloadProductsFromSupabase() {
+    if (!supabaseClient) return;
+
+    const { data, error } = await supabaseClient
+        .from("products")
+        .select("id,stock")
+        .order("id");
+
+    if (!error && data) {
+        data.forEach(row => {
+            const product = products.find(p => p.id === row.id);
+            if (product) product.stock = row.stock;
+        });
+        saveStockLocalOnly();
+        displayProducts(products);
+    }
+}
+
+/* =====================================================
+   BACKEND / ADMIN PANEL
+===================================================== */
+
+function openAdmin() {
+    renderAdmin();
+    openModal("adminModal");
+}
+
+function renderAdmin() {
+    const box = document.getElementById("adminContent");
+    const currentOrders = JSON.parse(localStorage.getItem("clickOrders") || "[]");
+
+    box.innerHTML = `
+        <h2>⚙️ ClickParts PH Backend</h2>
+        <p style="margin:8px 0 18px;color:#666">
+            Inventory and orders are stored in this browser's localStorage.
+        </p>
+
+        <h3>📦 Inventory</h3>
+        <div style="overflow:auto;margin:10px 0 25px">
+        <table style="width:100%;border-collapse:collapse">
+            <tr>
+                <th style="text-align:left;padding:8px;border-bottom:1px solid #ddd">Product</th>
+                <th style="padding:8px;border-bottom:1px solid #ddd">Stock</th>
+            </tr>
+            ${products.map(p => `
+                <tr>
+                    <td style="padding:8px;border-bottom:1px solid #eee">${p.name}</td>
+                    <td style="padding:8px;border-bottom:1px solid #eee;text-align:center">
+                        <input type="number" min="0" value="${p.stock}"
+                               style="width:80px;padding:6px"
+                               onchange="adminSetStock(${p.id},this.value)">
+                    </td>
+                </tr>
+            `).join("")}
+        </table>
+        </div>
+
+        
+<h3 style="margin-top:25px">🛠️ Supabase SQL Setup</h3>
+<details style="margin-top:8px">
+<summary style="cursor:pointer;color:#ee4d2d;font-weight:bold">Show SQL needed for this website</summary>
+<pre style="white-space:pre-wrap;background:#f5f5f5;padding:12px;border-radius:6px;margin-top:10px;font-size:12px;overflow:auto">create table if not exists products (
+  id bigint primary key,
+  name text not null,
+  price numeric not null,
+  category text,
+  stock integer not null default 0,
+  icon text,
+  description text
+);
+
+create table if not exists orders (
+  id bigint generated by default as identity primary key,
+  order_number text unique not null,
+  customer_name text not null,
+  phone text not null,
+  address text not null,
+  payment text not null,
+  total numeric not null,
+  status text not null default 'Ordered',
+  created_at timesta<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ClickParts PH | Honda Click Parts - Inventory & Delivery</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    color:#333;
+}
+
+/* HEADER */
+
+header{
+    background:#ee4d2d;
+    color:white;
+    padding:15px 5%;
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.search{
+    flex:1;
+    display:flex;
+    max-width:700px;
+}
+
+.search input{
+    width:100%;
+    padding:13px;
+    border:0;
+    outline:0;
+    font-size:15px;
+}
+
+.search button{
+    padding:13px 20px;
+    border:0;
+    background:#d63e20;
+    color:white;
+    cursor:pointer;
+}
+
+.cart-button{
+    border:0;
+    background:white;
+    color:#ee4d2d;
+    padding:12px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* CATEGORY */
+
+.categories{
+    background:white;
+    padding:15px 5%;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.categories button{
+    padding:9px 15px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.categories button:hover{
+    background:#ee4d2d;
+    color:white;
+}
+
+/* MAIN */
+
+.container{
+    width:90%;
+    max-width:1300px;
+    margin:25px auto;
+}
+
+.title{
+    margin-bottom:20px;
+}
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+.product-image{
+    height:170px;
+    background:linear-gradient(135deg,#222,#555);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:55px;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-info h3{
+    font-size:16px;
+    min-height:40px;
+}
+
+.category{
+    display:inline-block;
+    margin:8px 0;
+    padding:4px 7px;
+    background:#fff0eb;
+    color:#ee4d2d;
+    font-size:12px;
+    border-radius:3px;
+}
+
+.price{
+    color:#ee4d2d;
+    font-size:20px;
+    font-weight:bold;
+    margin:7px 0;
+}
+
+.stock{
+    color:#777;
+    font-size:13px;
+}
+
+.buttons{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.buttons button{
+    flex:1;
+    padding:9px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+.details{
+    background:white;
+    color:#ee4d2d;
+    border:1px solid #ee4d2d;
+}
+
+.add{
+    background:#ee4d2d;
+    color:white;
+    border:0;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.65);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:white;
+    width:92%;
+    max-width:650px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:8px;
+    padding:25px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:18px;
+    top:12px;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* CART */
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.qty button{
+    padding:5px 9px;
+    margin:2px;
+    cursor:pointer;
+}
+
+.remove{
+    background:#d9534f;
+    color:white;
+    border:0;
+    padding:6px;
+    cursor:pointer;
+}
+
+.total{
+    text-align:right;
+    color:#ee4d2d;
+    font-size:23px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:12px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+
+.submit{
+    width:100%;
+    padding:13px;
+    background:#ee4d2d;
+    color:white;
+    border:0;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+/* ORDER STATUS */
+
+.status{
+    display:flex;
+    margin:30px 0;
+}
+
+.status div{
+    flex:1;
+    text-align:center;
+    padding:12px 5px;
+    border-bottom:4px solid #ddd;
+    color:#999;
+}
+
+.status .active{
+    color:#ee4d2d;
+    border-bottom-color:#ee4d2d;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .header{
+        flex-direction:column;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .product-image{
+        height:130px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .cart-item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="header">
+
+    <div class="logo">
+        🏍️ ClickParts PH
+    </div>
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Search Honda Click parts..."
+            onkeyup="searchProducts()"
+        >
+
+        <button onclick="searchProducts()">
+            Search
+        </button>
+
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+
+        🛒 Cart
+
+        (<span id="cartCount">0</span>)
+
+    </button>
+
+</div>
+
+</header>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<div class="categories">
+
+<button onclick="filterProducts('All')">
+All
+</button>
+
+<button onclick="filterProducts('Engine Parts')">
+Engine
+</button>
+
+<button onclick="filterProducts('CVT Parts')">
+CVT
+</button>
+
+<button onclick="filterProducts('Brake System')">
+Brake
+</button>
+
+<button onclick="filterProducts('Electrical')">
+Electrical
+</button>
+
+<button onclick="filterProducts('Lighting')">
+Lighting
+</button>
+
+<button onclick="filterProducts('Body Parts')">
+Body
+</button>
+
+<button onclick="filterProducts('Suspension')">
+Suspension
+</button>
+
+</div>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<div class="container">
+
+<h2 class="title">
+Honda Click Motorcycle Parts
+</h2>
+
+<div
+    id="products"
+    class="products">
+</div>
+
+</div>
+
+
+<!-- ================= PRODUCT DETAILS ================= -->
+
+<div
+    id="detailsModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('detailsModal')">
+    ×
+</span>
+
+<div id="detailsContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================= CART ================= -->
+
+<div
+    id="cartModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('cartModal')">
+    ×
+</span>
+
+<h2>🛒 Shopping Cart</h2>
+
+<br>
+
+<div id="cartItems"></div>
+
+<div class="total">
+
+Total:
+₱<span id="cartTotal">0</span>
+
+</div>
+
+<button
+    class="submit"
+    onclick="checkout()">
+
+Proceed to Checkout
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= CHECKOUT ================= -->
+
+<div
+    id="checkoutModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('checkoutModal')">
+    ×
+</span>
+
+<h2>📦 Checkout</h2>
+
+<br>
+
+<form onsubmit="placeOrder(event)">
+
+<div class="form-group">
+
+<label>
+Full Name
+</label>
+
+<input
+    id="customerName"
+    required
+    placeholder="Enter your full name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Phone Number
+</label>
+
+<input
+    id="phone"
+    required
+    placeholder="09XXXXXXXXX">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Delivery Address
+</label>
+
+<textarea
+    id="address"
+    rows="4"
+    required
+    placeholder="Complete delivery address"></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Payment Method
+</label>
+
+<select id="payment" required>
+
+<option value="">
+Select payment method
+</option>
+
+<option>
+Cash on Delivery
+</option>
+
+<option>
+GCash
+</option>
+
+<option>
+Bank Transfer
+</option>
+
+</select>
+
+</div>
+
+
+<button
+    class="submit"
+    type="submit">
+
+🛍️ PLACE ORDER
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- ================= ORDER ================= -->
+
+<div
+    id="orderModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('orderModal')">
+    ×
+</span>
+
+<h2>📦 Order Tracking</h2>
+
+<br>
+
+<p>
+Order Number:
+<strong id="orderNumber"></strong>
+</p>
+
+<br>
+
+<div class="status">
+
+<div id="status1">
+✓ Ordered
+</div>
+
+<div id="status2">
+Packed
+</div>
+
+<div id="status3">
+Shipped
+</div>
+
+<div id="status4">
+Delivered
+</div>
+
+</div>
+
+<p id="orderMessage">
+Your order has been received.
+</p>
+
+<br>
+
+<button
+    class="submit"
+    onclick="nextStatus()">
+
+Update Order Status
+
+</button>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- ================= BACKEND / ADMIN ================= -->
+
+<div id="adminModal" class="modal">
+<div class="modal-box">
+
+<span class="close" onclick="closeModal('adminModal')">×</span>
+
+<div id="adminContent"></div>
+
+</div>
+</div>
+
+<script>
+
+/* =====================================================
+   HONDA CLICK PRODUCTS
+===================================================== */
+
+const products = [
+
+{
+id:1,
+name:"Honda Click 125/150 Brake Pads",
+price:450,
+category:"Brake System",
+stock:25,
+icon:"🛑",
+description:"Replacement brake pads for Honda Click."
+},
+
+{
+id:2,
+name:"Honda Click CVT Drive Belt",
+price:850,
+category:"CVT Parts",
+stock:18,
+icon:"⚙️",
+description:"CVT drive belt for Honda Click."
+},
+
+{
+id:3,
+name:"Honda Click Variator Set",
+price:1200,
+category:"CVT Parts",
+stock:15,
+icon:"⚙️",
+description:"Complete variator set for Honda Click."
+},
+
+{
+id:4,
+name:"Honda Click Clutch Assembly",
+price:1450,
+category:"CVT Parts",
+stock:10,
+icon:"⚙️",
+description:"Replacement clutch assembly."
+},
+
+{
+id:5,
+name:"Honda Click Air Filter",
+price:280,
+category:"Engine Parts",
+stock:30,
+icon:"🔧",
+description:"Air filter replacement."
+},
+
+{
+id:6,
+name:"Honda Click Oil Filter",
+price:220,
+category:"Engine Parts",
+stock:35,
+icon:"🛢️",
+description:"Oil filter replacement."
+},
+
+{
+id:7,
+name:"Honda Click Spark Plug",
+price:180,
+category:"Engine Parts",
+stock:40,
+icon:"⚡",
+description:"Spark plug replacement."
+},
+
+{
+id:8,
+name:"Honda Click Headlight Assembly",
+price:1850,
+category:"Lighting",
+stock:8,
+icon:"💡",
+description:"Front headlight assembly."
+},
+
+{
+id:9,
+name:"Honda Click LED Tail Light",
+price:950,
+category:"Lighting",
+stock:12,
+icon:"🔴",
+description:"LED rear tail light."
+},
+
+{
+id:10,
+name:"Honda Click Side Mirror Set",
+price:650,
+category:"Body Parts",
+stock:20,
+icon:"🪞",
+description:"Left and right side mirrors."
+},
+
+{
+id:11,
+name:"Honda Click Front Fender",
+price:780,
+category:"Body Parts",
+stock:10,
+icon:"🏍️",
+description:"Front fender replacement."
+},
+
+{
+id:12,
+name:"Honda Click Brake Lever Set",
+price:420,
+category:"Brake System",
+stock:22,
+icon:"🛠️",
+description:"Brake lever replacement set."
+},
+
+{
+id:13,
+name:"Honda Click Throttle Grip Set",
+price:350,
+category:"Handlebar Parts",
+stock:25,
+icon:"🔧",
+description:"Throttle and grip set."
+},
+
+{
+id:14,
+name:"Honda Click Rear Shock Absorber",
+price:1350,
+category:"Suspension",
+stock:14,
+icon:"🔩",
+description:"Rear shock absorber."
+},
+
+{
+id:15,
+name:"Honda Click Front Wheel Bearing",
+price:390,
+category:"Wheel Parts",
+stock:20,
+icon:"⚙️",
+description:"Front wheel bearing."
+},
+
+{
+id:16,
+name:"Honda Click Battery",
+price:1150,
+category:"Electrical",
+stock:15,
+icon:"🔋",
+description:"Motorcycle battery for Honda Click."
+},
+
+{
+id:17,
+name:"Honda Click Horn",
+price:280,
+category:"Electrical",
+stock:25,
+icon:"📢",
+description:"Electric horn replacement."
+},
+
+{
+id:18,
+name:"Honda Click Speedometer Cover",
+price:520,
+category:"Body Parts",
+stock:12,
+icon:"🏍️",
+description:"Speedometer cover."
+},
+
+{
+id:19,
+name:"Honda Click Center Stand",
+price:850,
+category:"Frame Parts",
+stock:10,
+icon:"🔩",
+description:"Center stand replacement."
+},
+
+{
+id:20,
+name:"Honda Click Footrest Panel",
+price:720,
+category:"Body Parts",
+stock:15,
+icon:"🏍️",
+description:"Footrest panel replacement."
+}
+
+];
+/* =====================================================
+   PERSISTENT INVENTORY / BACKEND SIMULATION
+   Stock is saved in localStorage so checkout survives refresh.
+===================================================== */
+
+const defaultProducts = products.map(p => ({...p}));
+
+const savedStock = JSON.parse(localStorage.getItem("clickStock") || "null");
+
+if (savedStock) {
+    products.forEach(p => {
+        if (savedStock[p.id] !== undefined) p.stock = savedStock[p.id];
+    });
+} else {
+    saveStock();
+}
+
+function saveStock() {
+    const stockData = {};
+    products.forEach(p => stockData[p.id] = p.stock);
+    localStorage.setItem("clickStock", JSON.stringify(stockData));
+}
+
+/* Save every order in an order list, not just the latest order. */
+let orders = JSON.parse(localStorage.getItem("clickOrders") || "[]");
+
+/* =====================================================
+   BACKEND / ADMIN PANEL
+===================================================== */
+
+function openAdmin() {
+    renderAdmin();
+    openModal("adminModal");
+}
+
+function renderAdmin() {
+    const box = document.getElementById("adminContent");
+    const currentOrders = JSON.parse(localStorage.getItem("clickOrders") || "[]");
+
+    box.innerHTML = `
+        <h2>⚙️ ClickParts PH Backend</h2>
+        <p style="margin:8px 0 18px;color:#666">
+            Inventory and orders are stored in this browser's localStorage.
+        </p>
+
+        <h3>📦 Inventory</h3>
+        <div style="overflow:auto;margin:10px 0 25px">
+        <table style="width:100%;border-collapse:collapse">
+            <tr>
+                <th style="text-align:left;padding:8px;border-bottom:1px solid #ddd">Product</th>
+                <th style="padding:8px;border-bottom:1px solid #ddd">Stock</th>
+            </tr>
+            ${products.map(p => `
+                <tr>
+                    <td style="padding:8px;border-bottom:1px solid #eee">${p.name}</td>
+                    <td style="padding:8px;border-bottom:1px solid #eee;text-align:center">
+                        <input type="number" min="0" value="${p.stock}"
+                               style="width:80px;padding:6px"
+                               onchange="adminSetStock(${p.id},this.value)">
+                    </td>
+                </tr>
+            `).join("")}
+        </table>
+        </div>
+
+        <h3>🧾 Orders (${currentOrders.length})</h3>
+        ${currentOrders.length ? currentOrders.slice().reverse().map(o => `
+            <div style="border:1px solid #ddd;border-radius:7px;padding:12px;margin:10px 0">
+                <strong>${o.number}</strong>
+                <div>Customer: ${escapeHtml(o.customer)}</div>
+                <div>Phone: ${escapeHtml(o.phone)}</div>
+                <div>Status: <strong>${statusName(o.status)}</strong></div>
+                <div>Total: ₱${Number(o.total).toLocaleString()}</div>
+                <div style="font-size:12px;color:#777">${o.date}</div>
+            </div>
+        `).join("") : `<p style="padding:15px;color:#777">No orders yet.</p>`}
+
+        <button class="submit" onclick="resetDemoData()" style="margin-top:10px">
+            Reset Demo Inventory & Orders
+        </button>
+    `;
+}
+
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[c]));
+}
+
+function statusName(status) {
+    return ["","Ordered","Packed","Shipped","Delivered"][status] || "Unknown";
+}
+
+function adminSetStock(id, value) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    product.stock = Math.max(0, parseInt(value, 10) || 0);
+    saveStock();
+    displayProducts(products);
+}
+
+function resetDemoData() {
+    if (!confirm("Reset inventory and all saved orders?")) return;
+    products.forEach((p, i) => p.stock = defaultProducts[i].stock);
+    orders = [];
+    saveStock();
+    localStorage.removeItem("clickOrders");
+    localStorage.removeItem("clickOrder");
+    renderAdmin();
+    displayProducts(products);
+    alert("Demo data reset.");
+}
+
+/* =====================================================
+   AUTOMATIC DELIVERY UPDATES
+   Ordered -> Packed -> Shipped -> Delivered
+===================================================== */
+
+let deliveryTimer = null;
+
+function startAutomaticDelivery(order) {
+    if (deliveryTimer) clearInterval(deliveryTimer);
+
+    deliveryTimer = setInterval(() => {
+        const saved = JSON.parse(localStorage.getItem("clickOrder") || "null");
+        if (!saved || saved.number !== order.number || saved.status >= 4) {
+            clearInterval(deliveryTimer);
+            deliveryTimer = null;
+            return;
+        }
+
+        saved.status++;
+        saved.statusUpdatedAt = new Date().toLocaleString();
+
+        const all = JSON.parse(localStorage.getItem("clickOrders") || "[]");
+        const index = all.findIndex(o => o.number === saved.number);
+        if (index >= 0) all[index] = saved;
+
+        localStorage.setItem("clickOrder", JSON.stringify(saved));
+        localStorage.setItem("clickOrders", JSON.stringify(all));
+
+        updateStatus(saved.status);
+
+        if (saved.status >= 4) {
+            clearInterval(deliveryTimer);
+            deliveryTimer = null;
+        }
+    }, 1000); // update every 1 second
+}
+
+/* Resume automatic delivery after page refresh. */
+function resumeDelivery() {
+    const order = JSON.parse(localStorage.getItem("clickOrder") || "null");
+    if (order && order.status < 4) {
+        startAutomaticDelivery(order);
+    }
+}
+
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+let cart =
+JSON.parse(
+localStorage.getItem("clickCart")
+) || [];
+
+
+/* =====================================================
+   DISPLAY PRODUCTS
+===================================================== */
+
+function displayProducts(list){
+
+const container =
+document.getElementById("products");
+
+container.innerHTML="";
+
+list.forEach(product=>{
+
+container.innerHTML += `
+
+<div class="card">
+
+<div class="product-image">
+${product.icon}
+</div>
+
+<div class="product-info">
+
+<span class="category">
+${product.category}
+</span>
+
+<h3>
+${product.name}
+</h3>
+
+<div class="price">
+₱${product.price.toLocaleString()}
+</div>
+
+<div class="stock">
+Stock: ${product.stock}
+</div>
+
+<div class="buttons">
+
+<button
+class="details"
+onclick="showDetails(${product.id})">
+
+Details
+
+</button>
+
+<button
+class="add"
+onclick="addToCart(${product.id})">
+
+🛒 Add Cart
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchProducts(){
+
+const text =
+document
+.getElementById("search")
+.value
+.toLowerCase();
+
+const result =
+products.filter(product=>
+
+product.name
+.toLowerCase()
+.includes(text)
+
+||
+
+product.category
+.toLowerCase()
+.includes(text)
+
+);
+
+displayProducts(result);
+
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function filterProducts(category){
+
+if(category==="All"){
+
+displayProducts(products);
+
+return;
+
+}
+
+displayProducts(
+products.filter(
+product=>product.category===category
+)
+);
+
+}
+
+
+/* =====================================================
+   PRODUCT DETAILS
+===================================================== */
+
+function showDetails(id){
+
+const product =
+products.find(
+p=>p.id===id
+);
+
+document.getElementById(
+"detailsContent"
+).innerHTML=`
+
+<div style="text-align:center;font-size:80px;">
+${product.icon}
+</div>
+
+<h2>
+${product.name}
+</h2>
+
+<br>
+
+<p>
+${product.description}
+</p>
+
+<br>
+
+<p>
+Category:
+<strong>${product.category}</strong>
+</p>
+
+<br>
+
+<h2 style="color:#ee4d2d">
+₱${product.price.toLocaleString()}
+</h2>
+
+<br>
+
+<p>
+Available Stock:
+${product.stock}
+</p>
+
+<br>
+
+<button
+class="submit"
+onclick="addToCart(${product.id})">
+
+🛒 Add to Cart
+
+</button>
+
+`;
+
+openModal("detailsModal");
+
+}
+
+
+/* =====================================================
+   ADD CART
+=============================================<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ClickParts PH | Honda Click Parts</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    color:#333;
+}
+
+/* HEADER */
+
+header{
+    background:#ee4d2d;
+    color:white;
+    padding:15px 5%;
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.search{
+    flex:1;
+    display:flex;
+    max-width:700px;
+}
+
+.search input{
+    width:100%;
+    padding:13px;
+    border:0;
+    outline:0;
+    font-size:15px;
+}
+
+.search button{
+    padding:13px 20px;
+    border:0;
+    background:#d63e20;
+    color:white;
+    cursor:pointer;
+}
+
+.cart-button{
+    border:0;
+    background:white;
+    color:#ee4d2d;
+    padding:12px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* CATEGORY */
+
+.categories{
+    background:white;
+    padding:15px 5%;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.categories button{
+    padding:9px 15px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.categories button:hover{
+    background:#ee4d2d;
+    color:white;
+}
+
+/* MAIN */
+
+.container{
+    width:90%;
+    max-width:1300px;
+    margin:25px auto;
+}
+
+.title{
+    margin-bottom:20px;
+}
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+.product-image{
+    height:170px;
+    background:linear-gradient(135deg,#222,#555);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:55px;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-info h3{
+    font-size:16px;
+    min-height:40px;
+}
+
+.category{
+    display:inline-block;
+    margin:8px 0;
+    padding:4px 7px;
+    background:#fff0eb;
+    color:#ee4d2d;
+    font-size:12px;
+    border-radius:3px;
+}
+
+.price{
+    color:#ee4d2d;
+    font-size:20px;
+    font-weight:bold;
+    margin:7px 0;
+}
+
+.stock{
+    color:#777;
+    font-size:13px;
+}
+
+.buttons{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.buttons button{
+    flex:1;
+    padding:9px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+.details{
+    background:white;
+    color:#ee4d2d;
+    border:1px solid #ee4d2d;
+}
+
+.add{
+    background:#ee4d2d;
+    color:white;
+    border:0;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.65);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:white;
+    width:92%;
+    max-width:650px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:8px;
+    padding:25px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:18px;
+    top:12px;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* CART */
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.qty button{
+    padding:5px 9px;
+    margin:2px;
+    cursor:pointer;
+}
+
+.remove{
+    background:#d9534f;
+    color:white;
+    border:0;
+    padding:6px;
+    cursor:pointer;
+}
+
+.total{
+    text-align:right;
+    color:#ee4d2d;
+    font-size:23px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:12px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+
+.submit{
+    width:100%;
+    padding:13px;
+    background:#ee4d2d;
+    color:white;
+    border:0;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+/* ORDER STATUS */
+
+.status{
+    display:flex;
+    margin:30px 0;
+}
+
+.status div{
+    flex:1;
+    text-align:center;
+    padding:12px 5px;
+    border-bottom:4px solid #ddd;
+    color:#999;
+}
+
+.status .active{
+    color:#ee4d2d;
+    border-bottom-color:#ee4d2d;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .header{
+        flex-direction:column;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .product-image{
+        height:130px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .cart-item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="header">
+
+    <div class="logo">
+        🏍️ ClickParts PH
+    </div>
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Search Honda Click parts..."
+            onkeyup="searchProducts()"
+        >
+
+        <button onclick="searchProducts()">
+            Search
+        </button>
+
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+
+        🛒 Cart
+
+        (<span id="cartCount">0</span>)
+
+    </button>
+
+</div>
+
+</header>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<div class="categories">
+
+<button onclick="filterProducts('All')">
+All
+</button>
+
+<button onclick="filterProducts('Engine Parts')">
+Engine
+</button>
+
+<button onclick="filterProducts('CVT Parts')">
+CVT
+</button>
+
+<button onclick="filterProducts('Brake System')">
+Brake
+</button>
+
+<button onclick="filterProducts('Electrical')">
+Electrical
+</button>
+
+<button onclick="filterProducts('Lighting')">
+Lighting
+</button>
+
+<button onclick="filterProducts('Body Parts')">
+Body
+</button>
+
+<button onclick="filterProducts('Suspension')">
+Suspension
+</button>
+
+</div>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<div class="container">
+
+<h2 class="title">
+Honda Click Motorcycle Parts
+</h2>
+
+<div
+    id="products"
+    class="products">
+</div>
+
+</div>
+
+
+<!-- ================= PRODUCT DETAILS ================= -->
+
+<div
+    id="detailsModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('detailsModal')">
+    ×
+</span>
+
+<div id="detailsContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================= CART ================= -->
+
+<div
+    id="cartModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('cartModal')">
+    ×
+</span>
+
+<h2>🛒 Shopping Cart</h2>
+
+<br>
+
+<div id="cartItems"></div>
+
+<div class="total">
+
+Total:
+₱<span id="cartTotal">0</span>
+
+</div>
+
+<button
+    class="submit"
+    onclick="checkout()">
+
+Proceed to Checkout
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= CHECKOUT ================= -->
+
+<div
+    id="checkoutModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('checkoutModal')">
+    ×
+</span>
+
+<h2>📦 Checkout</h2>
+
+<br>
+
+<form onsubmit="placeOrder(event)">
+
+<div class="form-group">
+
+<label>
+Full Name
+</label>
+
+<input
+    id="customerName"
+    required
+    placeholder="Enter your full name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Phone Number
+</label>
+
+<input
+    id="phone"
+    required
+    placeholder="09XXXXXXXXX">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Delivery Address
+</label>
+
+<textarea
+    id="address"
+    rows="4"
+    required
+    placeholder="Complete delivery address"></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Payment Method
+</label>
+
+<select id="payment" required>
+
+<option value="">
+Select payment method
+</option>
+
+<option>
+Cash on Delivery
+</option>
+
+<option>
+GCash
+</option>
+
+<option>
+Bank Transfer
+</option>
+
+</select>
+
+</div>
+
+
+<button
+    class="submit"
+    type="submit">
+
+🛍️ PLACE ORDER
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- ================= ORDER ================= -->
+
+<div
+    id="orderModal"
+    class="modal">
+
+<div class="modal-box">
+
+<span
+    class="close"
+    onclick="closeModal('orderModal')">
+    ×
+</span>
+
+<h2>📦 Order Tracking</h2>
+
+<br>
+
+<p>
+Order Number:
+<strong id="orderNumber"></strong>
+</p>
+
+<br>
+
+<div class="status">
+
+<div id="status1">
+✓ Ordered
+</div>
+
+<div id="status2">
+Packed
+</div>
+
+<div id="status3">
+Shipped
+</div>
+
+<div id="status4">
+Delivered
+</div>
+
+</div>
+
+<p id="orderMessage">
+Your order has been received.
+</p>
+
+<br>
+
+<button
+    class="submit"
+    onclick="nextStatus()">
+
+Update Order Status
+
+</button>
+
+</div>
+
+</div>
+
+
+
+
+<script>
+
+/* =====================================================
+   HONDA CLICK PRODUCTS
+===================================================== */
+
+const products = [
+
+{
+id:1,
+name:"Honda Click 125/150 Brake Pads",
+price:450,
+category:"Brake System",
+stock:25,
+icon:"🛑",
+description:"Replacement brake pads for Honda Click."
+},
+
+{
+id:2,
+name:"Honda Click CVT Drive Belt",
+price:850,
+category:"CVT Parts",
+stock:18,
+icon:"⚙️",
+description:"CVT drive belt for Honda Click."
+},
+
+{
+id:3,
+name:"Honda Click Variator Set",
+price:1200,
+category:"CVT Parts",
+stock:15,
+icon:"⚙️",
+description:"Complete variator set for Honda Click."
+},
+
+{
+id:4,
+name:"Honda Click Clutch Assembly",
+price:1450,
+category:"CVT Parts",
+stock:10,
+icon:"⚙️",
+description:"Replacement clutch assembly."
+},
+
+{
+id:5,
+name:"Honda Click Air Filter",
+price:280,
+category:"Engine Parts",
+stock:30,
+icon:"🔧",
+description:"Air filter replacement."
+},
+
+{
+id:6,
+name:"Honda Click Oil Filter",
+price:220,
+category:"Engine Parts",
+stock:35,
+icon:"🛢️",
+description:"Oil filter replacement."
+},
+
+{
+id:7,
+name:"Honda Click Spark Plug",
+price:180,
+category:"Engine Parts",
+stock:40,
+icon:"⚡",
+description:"Spark plug replacement."
+},
+
+{
+id:8,
+name:"Honda Click Headlight Assembly",
+price:1850,
+category:"Lighting",
+stock:8,
+icon:"💡",
+description:"Front headlight assembly."
+},
+
+{
+id:9,
+name:"Honda Click LED Tail Light",
+price:950,
+category:"Lighting",
+stock:12,
+icon:"🔴",
+description:"LED rear tail light."
+},
+
+{
+id:10,
+name:"Honda Click Side Mirror Set",
+price:650,
+category:"Body Parts",
+stock:20,
+icon:"🪞",
+description:"Left and right side mirrors."
+},
+
+{
+id:11,
+name:"Honda Click Front Fender",
+price:780,
+category:"Body Parts",
+stock:10,
+icon:"🏍️",
+description:"Front fender replacement."
+},
+
+{
+id:12,
+name:"Honda Click Brake Lever Set",
+price:420,
+category:"Brake System",
+stock:22,
+icon:"🛠️",
+description:"Brake lever replacement set."
+},
+
+{
+id:13,
+name:"Honda Click Throttle Grip Set",
+price:350,
+category:"Handlebar Parts",
+stock:25,
+icon:"🔧",
+description:"Throttle and grip set."
+},
+
+{
+id:14,
+name:"Honda Click Rear Shock Absorber",
+price:1350,
+category:"Suspension",
+stock:14,
+icon:"🔩",
+description:"Rear shock absorber."
+},
+
+{
+id:15,
+name:"Honda Click Front Wheel Bearing",
+price:390,
+category:"Wheel Parts",
+stock:20,
+icon:"⚙️",
+description:"Front wheel bearing."
+},
+
+{
+id:16,
+name:"Honda Click Battery",
+price:1150,
+category:"Electrical",
+stock:15,
+icon:"🔋",
+description:"Motorcycle battery for Honda Click."
+},
+
+{
+id:17,
+name:"Honda Click Horn",
+price:280,
+category:"Electrical",
+stock:25,
+icon:"📢",
+description:"Electric horn replacement."
+},
+
+{
+id:18,
+name:"Honda Click Speedometer Cover",
+price:520,
+category:"Body Parts",
+stock:12,
+icon:"🏍️",
+description:"Speedometer cover."
+},
+
+{
+id:19,
+name:"Honda Click Center Stand",
+price:850,
+category:"Frame Parts",
+stock:10,
+icon:"🔩",
+description:"Center stand replacement."
+},
+
+{
+id:20,
+name:"Honda Click Footrest Panel",
+price:720,
+category:"Body Parts",
+stock:15,
+icon:"🏍️",
+description:"Footrest panel replacement."
+}
+
+];
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+let cart =
+JSON.parse(
+localStorage.getItem("clickCart")
+) || [];
+
+
+/* =====================================================
+   DISPLAY PRODUCTS
+===================================================== */
+
+function displayProducts(list){
+
+const container =
+document.getElementById("products");
+
+container.innerHTML="";
+
+list.forEach(product=>{
+
+container.innerHTML += `
+
+<div class="card">
+
+<div class="product-image">
+${product.icon}
+</div>
+
+<div class="product-info">
+
+<span class="category">
+${product.category}
+</span>
+
+<h3>
+${product.name}
+</h3>
+
+<div class="price">
+₱${product.price.toLocaleString()}
+</div>
+
+<div class="stock">
+Stock: ${product.stock}
+</div>
+
+<div class="buttons">
+
+<button
+class="details"
+onclick="showDetails(${product.id})">
+
+Details
+
+</button>
+
+<button
+class="add"
+onclick="addToCart(${product.id})">
+
+🛒 Add Cart
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchProducts(){
+
+const text =
+document
+.getElementById("search")
+.value
+.toLowerCase();
+
+const result =
+products.filter(product=>
+
+product.name
+.toLowerCase()
+.includes(text)
+
+||
+
+product.category
+.toLowerCase()
+.includes(text)
+
+);
+
+displayProducts(result);
+
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function filterProducts(category){
+
+if(category==="All"){
+
+displayProducts(products);
+
+return;
+
+}
+
+displayProducts(
+products.filter(
+product=>product.category===category
+)
+);
+
+}
+
+
+/* =====================================================
+   PRODUCT DETAILS
+===================================================== */
+
+function showDetails(id){
+
+const product =
+products.find(
+p=>p.id===id
+);
+
+document.getElementById(
+"detailsContent"
+).innerHTML=`
+
+<div style="text-align:center;font-size:80px;">
+${product.icon}
+</div>
+
+<h2>
+${product.name}
+</h2>
+
+<br>
+
+<p>
+${product.description}
+</p>
+
+<br>
+
+<p>
+Category:
+<strong>${product.category}</strong>
+</p>
+
+<br>
+
+<h2 style="color:#ee4d2d">
+₱${product.price.toLocaleString()}
+</h2>
+
+<br>
+
+<p>
+Available Stock:
+${product.stock}
+</p>
+
+<br>
+
+<button
+class="submit"
+onclick="addToCart(${product.id})">
+
+🛒 Add to Cart
+
+</button>
+
+`;
+
+openModal("detailsModal");
+
+}
+
+
+/* =====================================================
+   ADD CART
+===================================================== */
+
+function addToCart(id){
+
+const product =
+products.find(
+p=>p.id===id
+);
+
+const existing =
+cart.find(
+item=>item.id===id
+);
+
+if(existing){
+
+if(existing.qty < product.stock){
+
+existing.qty++;
+
+}else{
+
+alert("Maximum stock reached.");
+
+return;
+
+}
+
+}else{
+
+cart.push({
+
+id:id,
+
+qty:1
+
+});
+
+}
+
+saveCart();
+
+alert(
+product.name +
+" added to cart!"
+);
+
+}
+
+
+/* =====================================================
+   SAVE CART
+===================================================== */
+
+function saveCart(){
+
+localStorage.setItem(
+"clickCart",
+JSON.stringify(cart)
+);
+
+updateCartCount();
+
+}
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
+
+function updateCartCount(){
+
+let count=0;
+
+cart.forEach(
+item=>count+=item.qty
+);
+
+document.getElementById(
+"cartCount"
+).textContent=count;
+
+}
+
+
+/* =====================================================
+   OPEN CART
+===================================================== */
+
+function openCart(){
+
+renderCart();
+
+openModal("cartModal");
+
+}
+
+
+/* =====================================================
+   RENDER CART
+===================================================== */
+
+function renderCart(){
+
+const container =
+document.getElementById("cartItems");
+
+if(cart.length===0){
+
+container.innerHTML=`
+
+<p style="text-align:center;padding:30px">
+
+🛒 Your cart is empty.
+
+</p>
+
+`;
+
+document.getElementById(
+"cartTotal"
+).textContent="0";
+
+return;
+
+}
+
+container.innerHTML="";
+
+let total=0;
+
+cart.forEach(item=>{
+
+const product =
+products.find(
+p=>p.id===item.id
+);
+
+const subtotal =
+product.price*item.qty;
+
+total+=subtotal;
+
+container.innerHTML += `
+
+<div class="cart-item">
+
+<div>
+
+<strong>
+${product.name}
+</strong>
+
+<br>
+
+₱${product.price.toLocaleString()}
+
+<br>
+
+Subtotal:
+₱${subtotal.toLocaleString()}
+
+</div>
+
+<div class="qty">
+
+<button
+onclick="changeQuantity(${product.id},-1)">
+−
+</button>
+
+${item.qty}
+
+<button
+onclick="changeQuantity(${product.id},1)">
++
+</button>
+
+<br>
+
+<button
+class="remove"
+onclick="removeItem(${product.id})">
+
+Remove
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"cartTotal"
+).textContent =
+total.toLocaleString();
+
+}
+
+
+/* =====================================================
+   CHANGE QUANTITY
+===================================================== */
+
+function changeQuantity(id,amount){
+
+const item =
+cart.find(
+item=>item.id===id
+);
+
+const product =
+products.find(
+p=>p.id===id
+);
+
+if(!item)return;
+
+item.qty += amount;
+
+if(item.qty>product.stock){
+
+item.qty=product.stock;
+
+}
+
+if(item.qty<=0){
+
+cart=cart.filter(
+item=>item.id!==id
+);
+
+}
+
+saveCart();
+
+renderCart();
+
+}
+
+
+/* =====================================================
+   REMOVE ITEM
+===================================================== */
+
+function removeItem(id){
+
+cart=cart.filter(
+item=>item.id!==id
+);
+
+saveCart();
+
+renderCart();
+
+}
+
+
+/* =====================================================
+   CHECKOUT
+===================================================== */
+
+function checkout(){
+
+if(cart.length===0){
+
+alert("Your cart is empty.");
+
+return;
+
+}
+
+closeModal("cartModal");
+
+openModal("checkoutModal");
+
+}
+
+
+/* =====================================================
+   PLACE ORDER
+===================================================== */
+
+function placeOrder(event){
+
+event.preventDefault();
+
+if(cart.length===0){
+
+alert("Your cart is empty.");
+
+return;
+
+}
+
+const name =
+document.getElementById(
+"customerName"
+).value;
+
+const phone =
+document.getElementById(
+"phone"
+).value;
+
+const address =
+document.getElementById(
+"address"
+).value;
+
+const payment =
+document.getElementById(
+"payment"
+).value;
+
+
+let total=0;
+
+cart.forEach(item=>{
+
+const product =
+products.find(
+p=>p.id===item.id
+);
+
+total +=
+product.price*item.qty;
+
+});
+
+
+const order={
+
+number:
+"CLICK-"+
+
+Math.floor(
+100000+
+Math.random()*900000
+),
+
+customer:name,
+
+phone:phone,
+
+address:address,
+
+payment:payment,
+
+items:[...cart],
+
+total:total,
+
+status:1,
+
+date:
+new Date().toLocaleString()
+
+};
+
+
+localStorage.setItem(
+"clickOrder",
+JSON.stringify(order)
+);
+
+
+cart=[];
+
+saveCart();
+
+
+document.querySelector(
+"#checkoutModal form"
+).reset();
+
+
+closeModal(
+"checkoutModal"
+);
+
+
+showOrder();
+
+
+alert(
+"Order successfully placed!"
+);
+
+}
+
+
+/* =====================================================
+   SHOW ORDER
+===================================================== */
+
+function showOrder(){
+
+const order =
+JSON.parse(
+localStorage.getItem(
+"clickOrder"
+)
+);
+
+if(!order)return;
+
+
+document.getElementById(
+"orderNumber"
+).textContent=
+order.number;
+
+
+updateStatus(
+order.status
+);
+
+
+openModal(
+"orderModal"
+);
+
+}
+
+
+/* =====================================================
+   UPDATE STATUS
+===================================================== */
+
+function updateStatus(status){
+
+for(
+let i=1;
+i<=4;
+i++
+){
+
+const element =
+document.getElementById(
+"status"+i
+);
+
+if(i<=status){
+
+element.classList.add(
+"active"
+);
+
+}else{
+
+element.classList.remove(
+"active"
+);
+
+}
+
+}
+
+
+const messages=[
+
+"Your order has been received.",
+
+"Your order is being packed.",
+
+"Your order has been shipped.",
+
+"Your order has been delivered."
+
+];
+
+document.getElementById(
+"orderMessage"
+).textContent=
+messages[status-1];
+
+}
+
+
+/* =====================================================
+   NEXT ORDER STATUS
+===================================================== */
+
+function nextStatus(){
+
+const order =
+JSON.parse(
+localStorage.getItem(
+"clickOrder"
+)
+);
+
+if(!order)return;
+
+if(order.status<4){
+
+order.status++;
+
+localStorage.setItem(
+"clickOrder",
+JSON.stringify(order)
+);
+
+updateStatus(
+order.status
+);
+
+}else{
+
+alert(
+"Order is already delivered."
+);
+
+}
+
+}
+
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+function openModal(id){
+
+document.getElementById(
+id
+).style.display="flex";
+
+}
+
+
+function closeModal(id){
+
+document.getElementById(
+id
+).style.display="none";
+
+}
+
+
+/* =====================================================
+   CLOSE WHEN CLICK OUTSIDE
+===================================================== */
+
+window.onclick=function(event){
+
+if(
+event.target.classList.contains(
+"modal"
+)
+){
+
+event.target.style.display="none";
+
+}
+
+};
+
+
+/* =====================================================
+   START WEBSITE
+===================================================== */
+
+displayProducts(products);
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>
